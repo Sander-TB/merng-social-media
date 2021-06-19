@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../queries/login";
 import { useForm } from "../../hooks/useForm";
+import { AuthContext } from "../../context/auth";
 
 export default function Login(props) {
+	const context = useContext(AuthContext);
 	const [errors, setErrors] = useState({});
 
 	const { onChange, onSubmit, values } = useForm(loginUserCallback, {
@@ -12,7 +14,9 @@ export default function Login(props) {
 	});
 
 	const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-		update(_, result) {
+		update(_, { data: { login: userData } }) {
+			console.log(userData);
+			context.login(userData);
 			props.history.push("/");
 		},
 		onError(err) {
