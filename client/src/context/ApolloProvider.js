@@ -7,7 +7,7 @@ import {
 import App from "../App";
 
 const httpLink = createHttpLink({
-	uri: process.env.REACT_APP_BASE_URL,
+	uri: "http://localhost:5000",
 });
 
 const client = new ApolloClient({
