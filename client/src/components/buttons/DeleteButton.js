@@ -5,7 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { DELETE_POST_MUTATION } from "../../queries/deletePost";
 
-export default function DeleteButton({ postId }) {
+function DeleteButton({ postId }) {
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
 	const [deletePost] = useMutation(DELETE_POST_MUTATION, {
@@ -99,3 +99,5 @@ export default function DeleteButton({ postId }) {
 		</>
 	);
 }
+
+export default DeleteButton;

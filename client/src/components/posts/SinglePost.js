@@ -47,7 +47,7 @@ export default function SinglePost(props) {
 						/>
 						<p>{username}</p>
 						<div>
-							{user && user.user.username === username && (
+							{user && user.username === username && (
 								<DeleteButton postId={id} />
 							)}
 						</div>
