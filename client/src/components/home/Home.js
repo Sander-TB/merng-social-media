@@ -2,12 +2,12 @@ import { useQuery } from "@apollo/client";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { IoTrash } from "react-icons/io5";
 
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
 import { AuthContext } from "../../context/auth";
 import PostForm from "../posts/PostForm";
 import LikeButton from "../buttons/LikeButton";
+import DeleteButton from "../buttons/DeleteButton";
 
 export default function Home() {
 	const user = useContext(AuthContext);
@@ -46,11 +46,7 @@ export default function Home() {
 
 								<div>
 									{user && user.user.username === post.username && (
-										<button
-											onClick={() => console.log("Delete post")}
-											className='bg-red-500 rounded px-3 py-2'>
-											<IoTrash className='inline mb-1' />
-										</button>
+										<DeleteButton postId={post.id} />
 									)}
 								</div>
 							</div>

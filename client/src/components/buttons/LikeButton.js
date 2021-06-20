@@ -1,7 +1,9 @@
 import { IoHeartOutline, IoHeart } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
+
+import { LIKE_POST_MUTATION } from "../../queries/likePost";
 
 function LikeButton({ user, post: { id, likes } }) {
 	const [liked, setLiked] = useState(false);
@@ -40,17 +42,5 @@ function LikeButton({ user, post: { id, likes } }) {
 		</div>
 	);
 }
-
-const LIKE_POST_MUTATION = gql`
-	mutation likePost($postId: ID!) {
-		likePost(postId: $postId) {
-			id
-			likes {
-				id
-				username
-			}
-		}
-	}
-`;
 
 export default LikeButton;

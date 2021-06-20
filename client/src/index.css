@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://use.typekit.net/sgb7bmd.css");
+
 * {
 	margin: 0;
 	padding: 0;
