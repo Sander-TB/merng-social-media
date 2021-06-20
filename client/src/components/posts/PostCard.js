@@ -37,7 +37,7 @@ export default function PostCard({
 				</div>
 			</div>
 
-			<Link to={`/post/${id}`}>
+			<Link to={`/posts/${id}`}>
 				<img src={image} alt={caption} />
 			</Link>
 

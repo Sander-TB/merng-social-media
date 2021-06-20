@@ -10,11 +10,6 @@ function Home() {
 	const { user } = useContext(AuthContext);
 
 	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
-
-	if (data) {
-		console.log(data);
-	}
-
 	return (
 		<main className='flex flex-col items-center justify-center'>
 			{user && <PostForm />}

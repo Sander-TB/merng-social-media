@@ -4,14 +4,30 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { DELETE_POST_MUTATION } from "../../queries/deletePost";
+import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
 
-function DeleteButton({ postId }) {
+function DeleteButton({ postId, callback }) {
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
 	const [deletePost] = useMutation(DELETE_POST_MUTATION, {
-		update() {
+		update(proxy) {
 			setConfirmOpen(false);
-			// TODO: remove post from cache
+			const data = proxy.readQuery({
+				query: FETCH_POSTS_QUERY,
+			});
+			let newData = [...data.getPosts];
+			newData.getPosts = data.getPosts.filter((p) => p.id !== postId);
+			proxy.writeQuery({
+				query: FETCH_POSTS_QUERY,
+				data: {
+					...data,
+					getPosts: {
+						newData,
+					},
+				},
+			});
+
+			if (callback) callback();
 		},
 		variables: {
 			postId,
