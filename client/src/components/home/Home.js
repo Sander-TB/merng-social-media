@@ -1,10 +1,13 @@
 import { useQuery } from "@apollo/client";
+import { useContext } from "react";
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
 import moment from "moment";
-import { Link } from "react-router-dom";
 import { IoHeartOutline } from "react-icons/io5";
+import { AuthContext } from "../../context/auth";
+import PostForm from "../posts/PostForm";
 
 export default function Home() {
+	const user = useContext(AuthContext);
 	const { loading, data, error } = useQuery(FETCH_POSTS_QUERY);
 	if (data) {
 		console.log(data);
@@ -23,6 +26,7 @@ export default function Home() {
 
 	return (
 		<main className='flex flex-col items-center justify-center'>
+			{user && <PostForm />}
 			<div>
 				<h1>Recent Posts</h1>
 			</div>
