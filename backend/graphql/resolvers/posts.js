@@ -2,6 +2,7 @@ const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const Post = require("../../models/Post");
 const checkAuth = require("../../utils/check_auth");
+
 module.exports = {
 	Query: {
 		async getPosts() {
@@ -30,7 +31,7 @@ module.exports = {
 		async createPost(_, { image, caption }, context) {
 			const user = checkAuth(context);
 
-			if (args.image === "") {
+			if (image === "") {
 				throw new Error("Post image must not be empty");
 			}
 
@@ -50,11 +51,12 @@ module.exports = {
 
 			return post;
 		},
+
 		async deletePost(_, { postId }, context) {
 			const user = checkAuth(context);
 
 			try {
-				const post = await post.findById(postId);
+				const post = await Post.findById(postId);
 				if (user.username === post.username) {
 					await post.delete();
 					return "Post deleted successfully";
@@ -65,13 +67,15 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
+
 		async likePost(_, { postId }, context) {
-			const { username } = checkAuth(postId);
+			const { username } = checkAuth(context);
+
+			const post = await Post.findById(postId);
 			if (post) {
 				if (post.likes.find((like) => like.username === username)) {
 					// Post already liked; unlike it
 					post.likes = post.likes.filter((like) => like.username !== username);
-					await post.save();
 				} else {
 					// Not liked, like post
 					post.likes.push({
@@ -84,9 +88,12 @@ module.exports = {
 			} else throw new UserInputError("Post not found");
 		},
 	},
+
 	Subscription: {
 		newPost: {
 			subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("NEW_POST"),
 		},
 	},
 };
+
+//ok

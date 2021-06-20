@@ -15,7 +15,7 @@ module.exports = {
 				});
 			}
 
-			const post = Post.findOne(postId);
+			const post = Post.findById(postId);
 
 			if (post) {
 				post.comments.unshift({
@@ -48,3 +48,5 @@ module.exports = {
 		},
 	},
 };
+
+// OK

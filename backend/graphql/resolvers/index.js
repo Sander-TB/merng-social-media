@@ -19,3 +19,5 @@ module.exports = {
 		...postsResolvers.Subscription,
 	},
 };
+
+//ok

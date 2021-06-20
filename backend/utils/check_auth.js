@@ -19,3 +19,5 @@ module.exports = (context) => {
 	}
 	throw new Error("Authorization header must be provided ");
 };
+
+// This page is ok

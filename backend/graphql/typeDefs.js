@@ -4,7 +4,7 @@ module.exports = gql`
 	type Post {
 		id: ID!
 		image: String!
-		caption: String!
+		caption: String
 		username: String!
 		createdAt: String!
 		comments: [Comment]!
@@ -55,3 +55,5 @@ module.exports = gql`
 		newPost: Post!
 	}
 `;
+
+//OK
