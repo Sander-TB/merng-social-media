@@ -40,7 +40,6 @@ export default function PostForm() {
 				onChange={onChange}
 				value={values.image}
 				className='mb-2'
-				//error={}
 			/>
 			<input
 				placeholder='caption'
@@ -48,8 +47,12 @@ export default function PostForm() {
 				onChange={onChange}
 				value={values.caption}
 				className='border border-black mb-2'
-				//error={}
 			/>
+			{error && (
+				<div className='errors'>
+					<p>{error.graphQLErrors[0].message}</p>
+				</div>
+			)}
 			<button className='border border-black'>Submit</button>
 		</form>
 	);
