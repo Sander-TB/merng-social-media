@@ -35,11 +35,11 @@ export default function PostForm() {
 		<form onSubmit={onSubmit} className='flex flex-col mb-20'>
 			<h2>Create a post</h2>
 			<input
-				placeholder='pixelgram'
 				name='image'
+				type='file'
 				onChange={onChange}
 				value={values.image}
-				className='border border-black mb-2'
+				className='mb-2'
 				//error={}
 			/>
 			<input
