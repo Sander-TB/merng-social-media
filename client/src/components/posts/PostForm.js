@@ -36,10 +36,11 @@ export default function PostForm() {
 			<h2>Create a post</h2>
 			<input
 				name='image'
-				type='file'
+				type='text'
+				placeholder='Image'
 				onChange={onChange}
 				value={values.image}
-				className='mb-2'
+				className='border border-black mb-2'
 			/>
 			<input
 				placeholder='caption'

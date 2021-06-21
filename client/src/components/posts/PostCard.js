@@ -19,7 +19,6 @@ export default function PostCard({
 	},
 }) {
 	const { user } = useContext(AuthContext);
-
 	return (
 		<>
 			<div className='flex mb-1 items-center justify-between'>
@@ -43,8 +42,18 @@ export default function PostCard({
 
 			<LikeButton user={user} post={{ id, likes, likeCount }} />
 			<p>Likes: {likeCount}</p>
+			<p>
+				Liked by:{" "}
+				{likes.map((like) => {
+					if (likes.length < 2) {
+						return like.username;
+					} else {
+						return like.username + ", ";
+					}
+				})}
+			</p>
 			<div>
-				<button>Add a Comment</button>
+				<button className='border border-black'>Add a Comment</button>
 				<p>Comments: {commentCount}</p>
 			</div>
 

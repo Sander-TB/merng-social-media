@@ -10,12 +10,14 @@ export default function Nav() {
 	const menubar = user ? (
 		<nav className='flex items-baseline w-full'>
 			<div className='flex w-1/4'>
-				<h1 className='font-logo text-4xl'>
-					<TiCameraOutline className='inline' /> Pixelgram
-				</h1>
+				<Link to='/'>
+					<h1 className='font-logo text-4xl cursor-pointer'>
+						<TiCameraOutline className='inline' /> Pixelgram
+					</h1>
+				</Link>
 			</div>
 			<div className='flex items-evenly w-3/4'>
-				<Link to='/' className='mr-4'>
+				<Link to={`/users/${user.username}`} className='mr-4'>
 					{user.username}
 				</Link>
 				<button onClick={logout} className='mr-4'>
@@ -26,9 +28,11 @@ export default function Nav() {
 	) : (
 		<nav className='flex items-center w-full'>
 			<div className='flex w-1/4'>
-				<h1 className='font-logo text-4xl'>
-					<TiCameraOutline className='inline' /> Pixelgram
-				</h1>
+				<Link to='/'>
+					<h1 className='font-logo text-4xl cursor-pointer'>
+						<TiCameraOutline className='inline' /> Pixelgram
+					</h1>
+				</Link>
 			</div>
 			<div className='flex items-evenly w-3/4'>
 				<Link to='/' className='mr-4'>

@@ -64,6 +64,7 @@ export default function Register(props) {
 				<input
 					placeholder='Confirm Password'
 					name='confirmPassword'
+					type='password'
 					className='border border-black mb-2'
 					value={values.confirmPassword}
 					error={errors.confirmPassword}
