@@ -10,12 +10,12 @@ module.exports = {
 			if (body.trim() === "") {
 				throw new UserInputError("Empty comment", {
 					errors: {
-						body: "Comment body must not be empty",
+						body: "Comment body must not empty",
 					},
 				});
 			}
 
-			const post = Post.findById(postId);
+			const post = await Post.findById(postId);
 
 			if (post) {
 				post.comments.unshift({
@@ -27,6 +27,7 @@ module.exports = {
 				return post;
 			} else throw new UserInputError("Post not found");
 		},
+
 		async deleteComment(_, { postId, commentId }, context) {
 			const { username } = checkAuth(context);
 
