@@ -1,18 +1,34 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
-import { useContext } from "react";
+import { useContext, useState, useRef } from "react";
 
 import { AuthContext } from "../../context/auth";
 import { FETCH_POST_QUERY } from "../../queries/getOnePost";
 import LikeButton from "../buttons/LikeButton";
 import DeleteButton from "../buttons/DeleteButton";
+import { SUBMIT_COMMENT_MUTATION } from "../../queries/createComment";
 
 function SinglePost(props) {
 	const postId = props.match.params.postId;
 	const { user } = useContext(AuthContext);
+	const commentInputRef = useRef(null);
+
+	const [comment, setComment] = useState("");
+
 	const { data } = useQuery(FETCH_POST_QUERY, {
 		variables: {
 			postId,
+		},
+	});
+
+	const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
+		update() {
+			setComment("");
+			commentInputRef.current.blur();
+		},
+		variables: {
+			postId,
+			body: comment,
 		},
 	});
 
@@ -59,10 +75,42 @@ function SinglePost(props) {
 
 				<LikeButton user={user} post={{ id, likes, likeCount }} />
 				<p>Likes: {likeCount}</p>
+
 				<div>
 					<p>Comments: {commentCount}</p>
-					<p>{comments}</p>
-					<button>Add a Comment</button>
+					{user && (
+						<div>
+							<p>Post a comment</p>
+							<form>
+								<input
+									className='focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-300'
+									placeholder='comment..'
+									type='text'
+									name='comment'
+									value={comment}
+									onChange={(e) => setComment(e.target.value)}
+									ref={commentInputRef}
+								/>
+								<button
+									type='submit'
+									className='border border-black bg-blue-300 disabled:bg-blue-100 disabled:cursor-not-allowed'
+									disabled={comment.trim() === ""}
+									onClick={submitComment}>
+									Submit
+								</button>
+							</form>
+						</div>
+					)}
+					{comments.map((comment) => (
+						<div key={comment.id}>
+							{user && user.username === comment.username && (
+								<DeleteButton postId={id} commentId={comment.id} />
+							)}
+							<p>{comment.username}</p>
+							<p>{moment(comment.createdAt).fromNow()}</p>
+							<p>{comment.body}</p>
+						</div>
+					))}
 				</div>
 
 				<p>{moment(createdAt).fromNow()}</p>

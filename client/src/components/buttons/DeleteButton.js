@@ -5,32 +5,38 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { DELETE_POST_MUTATION } from "../../queries/deletePost";
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
+import { DELETE_COMMENT_MUTATION } from "../../queries/deleteComment";
 
-function DeleteButton({ postId, callback }) {
+function DeleteButton({ postId, commentId, callback }) {
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
-	const [deletePost] = useMutation(DELETE_POST_MUTATION, {
+	const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
+
+	const [deletePostOrComment] = useMutation(mutation, {
 		update(proxy) {
 			setConfirmOpen(false);
-			const data = proxy.readQuery({
-				query: FETCH_POSTS_QUERY,
-			});
-			let newData = [...data.getPosts];
-			newData.getPosts = data.getPosts.filter((p) => p.id !== postId);
-			proxy.writeQuery({
-				query: FETCH_POSTS_QUERY,
-				data: {
-					...data,
-					getPosts: {
-						newData,
+			if (!commentId) {
+				const data = proxy.readQuery({
+					query: FETCH_POSTS_QUERY,
+				});
+				let newData = [...data.getPosts];
+				newData.getPosts = data.getPosts.filter((p) => p.id !== postId);
+				proxy.writeQuery({
+					query: FETCH_POSTS_QUERY,
+					data: {
+						...data,
+						getPosts: {
+							newData,
+						},
 					},
-				},
-			});
+				});
+			}
 
 			if (callback) callback();
 		},
 		variables: {
 			postId,
+			commentId,
 		},
 	});
 
@@ -85,9 +91,9 @@ function DeleteButton({ postId, callback }) {
 											</Dialog.Title>
 											<div className='mt-2'>
 												<p className='text-sm text-gray-500'>
-													Are you sure you want to delete this post? All of its
-													data will be permanently removed. This action cannot
-													be undone.
+													Are you sure you want to delete this? All of its data
+													will be permanently removed. This action cannot be
+													undone.
 												</p>
 											</div>
 										</div>
@@ -97,7 +103,7 @@ function DeleteButton({ postId, callback }) {
 									<button
 										type='button'
 										className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm'
-										onClick={deletePost}>
+										onClick={deletePostOrComment}>
 										Delete
 									</button>
 									<button
