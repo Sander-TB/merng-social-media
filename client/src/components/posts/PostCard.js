@@ -15,6 +15,7 @@ export default function PostCard({
 		username,
 		likeCount,
 		commentCount,
+		comments,
 		likes,
 	},
 }) {
@@ -53,8 +54,16 @@ export default function PostCard({
 				})}
 			</p>
 			<div>
-				<button className='border border-black'>Add a Comment</button>
-				<p>Comments: {commentCount}</p>
+				{comments.map((comment) => (
+					<div key={comment.id}>
+						{user && user.username === comment.username && (
+							<DeleteButton postId={id} commentId={comment.id} />
+						)}
+						<p>{comment.username}</p>
+						<p>{moment(comment.createdAt).fromNow()}</p>
+						<p>{comment.body}</p>
+					</div>
+				))}
 			</div>
 
 			<p>{caption}</p>
