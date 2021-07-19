@@ -2,17 +2,13 @@ import { useContext } from "react";
 import { useQuery } from "@apollo/client";
 
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
-import { AuthContext } from "../../context/auth";
-import PostForm from "../posts/PostForm";
 import PostCard from "../posts/PostCard";
+import Container from "@material-ui/core/Container";
 
 function Home() {
-	const { user } = useContext(AuthContext);
-
 	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 	return (
-		<main className='flex flex-col items-center justify-center'>
-			{user && <PostForm />}
+		<Container maxWidth='xs'>
 			<div>
 				<h1>Recent Posts</h1>
 			</div>
@@ -22,13 +18,13 @@ function Home() {
 				data &&
 				data.getPosts.map((post) => {
 					return (
-						<div key={post.id} className='border border-black mb-5 w-1/4'>
+						<div key={post.id}>
 							<PostCard post={post} />
 						</div>
 					);
 				})
 			)}
-		</main>
+		</Container>
 	);
 }
 

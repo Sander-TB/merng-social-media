@@ -1,6 +1,9 @@
 import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
 import { useContext, useState, useRef } from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Container from "@material-ui/core/Container";
 
 import { AuthContext } from "../../context/auth";
 import { FETCH_POST_QUERY } from "../../queries/getOnePost";
@@ -53,13 +56,12 @@ function SinglePost(props) {
 		} = data;
 
 		postMarkup = (
-			<div key={id} className='border border-black mb-5 w-1/4'>
-				<div className='flex mb-1 items-center justify-between'>
-					<div className='flex items-center'>
+			<Container maxWidth='xs' key={id}>
+				<div>
+					<div>
 						<img
 							src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 							alt='avatar'
-							className='w-10'
 						/>
 						<p>{username}</p>
 						<div>
@@ -82,8 +84,10 @@ function SinglePost(props) {
 						<div>
 							<p>Post a comment</p>
 							<form>
-								<input
-									className='focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-300'
+								<TextField
+									id='outlined-basic'
+									label='Post a comment'
+									variant='outlined'
 									placeholder='comment..'
 									type='text'
 									name='comment'
@@ -91,13 +95,13 @@ function SinglePost(props) {
 									onChange={(e) => setComment(e.target.value)}
 									ref={commentInputRef}
 								/>
-								<button
+								<Button
+									variant='contained'
 									type='submit'
-									className='border border-black bg-blue-300 disabled:bg-blue-100 disabled:cursor-not-allowed'
 									disabled={comment.trim() === ""}
 									onClick={submitComment}>
 									Submit
-								</button>
+								</Button>
 							</form>
 						</div>
 					)}
@@ -114,7 +118,7 @@ function SinglePost(props) {
 				</div>
 
 				<p>{moment(createdAt).fromNow()}</p>
-			</div>
+			</Container>
 		);
 	}
 	return postMarkup;

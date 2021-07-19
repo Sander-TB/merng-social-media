@@ -1,7 +1,9 @@
-import { IoHeartOutline, IoHeart } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import { LIKE_POST_MUTATION } from "../../queries/likePost";
 
@@ -21,24 +23,22 @@ function LikeButton({ user, post: { id, likes } }) {
 	const likeButton = user ? (
 		liked ? (
 			<div>
-				<IoHeart />
+				<FavoriteIcon />
 			</div>
 		) : (
 			<div>
-				<IoHeartOutline />
+				<FavoriteBorderIcon />
 			</div>
 		)
 	) : (
 		<Link to='/login'>
-			<IoHeartOutline />
+			<FavoriteBorderIcon />
 		</Link>
 	);
 
 	return (
 		<div className='flex'>
-			<button onClick={likePost} className='cursor-pointer'>
-				{likeButton}
-			</button>
+			<IconButton onClick={likePost}>{likeButton}</IconButton>
 		</div>
 	);
 }

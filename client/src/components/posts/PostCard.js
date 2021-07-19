@@ -22,12 +22,11 @@ export default function PostCard({
 	const { user } = useContext(AuthContext);
 	return (
 		<>
-			<div className='flex mb-1 items-center justify-between'>
-				<div className='flex items-center'>
+			<div className=''>
+				<div className=''>
 					<img
 						src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 						alt='avatar'
-						className='w-10'
 					/>
 					<p>{username}</p>
 				</div>

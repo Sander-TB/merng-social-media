@@ -5,7 +5,7 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Nav from "./components/navigation/Nav";
 import SinglePost from "./components/posts/SinglePost";
-import userProfile from "./components/users/userProfile";
+import UserProfile from "./components/users/UserProfile";
 import { AuthProvider } from "./context/auth";
 import AuthRoute from "./utils/Authroute";
 
@@ -19,7 +19,7 @@ function App() {
 					<AuthRoute exact path='/login' component={Login} />
 					<AuthRoute exact path='/register' component={Register} />
 					<Route exact path='/posts/:postId' component={SinglePost} />
-					<Route exact path='/users/:username' component={userProfile} />
+					<Route exact path='/users/:username' component={UserProfile} />
 				</Switch>
 			</Router>
 		</AuthProvider>

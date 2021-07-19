@@ -1,11 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import url("https://use.typekit.net/sgb7bmd.css");
 
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+img {
+	width: 100%;
+}
+
+body {
+	font-family: open-sans, sans-serif;
+}
+
+.logo {
+	font-family: permanent-marker-pro, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }

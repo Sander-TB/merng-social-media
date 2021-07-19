@@ -2,6 +2,10 @@ import { useForm } from "../../hooks/useForm";
 import { CREATE_POST_MUTATION } from "../../queries/createPost";
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
 import { useMutation } from "@apollo/client";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 
 export default function PostForm() {
 	const { values, onChange, onSubmit } = useForm(createPostCallback, {
@@ -32,29 +36,36 @@ export default function PostForm() {
 	}
 
 	return (
-		<form onSubmit={onSubmit} className='flex flex-col mb-20'>
-			<h2>Create a post</h2>
-			<input
-				name='image'
-				type='text'
-				placeholder='Image'
-				onChange={onChange}
-				value={values.image}
-				className='border border-black mb-2'
-			/>
-			<input
-				placeholder='caption'
-				name='caption'
-				onChange={onChange}
-				value={values.caption}
-				className='border border-black mb-2'
-			/>
-			{error && (
-				<div className='errors'>
-					<p>{error.graphQLErrors[0].message}</p>
-				</div>
-			)}
-			<button className='border border-black'>Submit</button>
-		</form>
+		<Paper>
+			<form onSubmit={onSubmit}>
+				<Typography variant='display1' align='center' gutterBottom>
+					Create a post
+				</Typography>
+
+				<TextField
+					label='Image'
+					variant='outlined'
+					name='image'
+					type='text'
+					placeholder='Image'
+					onChange={onChange}
+					value={values.image}
+				/>
+				<TextField
+					label='Caption'
+					variant='outlined'
+					placeholder='caption'
+					name='caption'
+					onChange={onChange}
+					value={values.caption}
+				/>
+				{error && (
+					<div className='errors'>
+						<p>{error.graphQLErrors[0].message}</p>
+					</div>
+				)}
+				<Button variant='contained'>Submit</Button>
+			</form>
+		</Paper>
 	);
 }

@@ -3,6 +3,9 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../queries/login";
 import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../context/auth";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
 
 export default function Login(props) {
 	const context = useContext(AuthContext);
@@ -30,37 +33,37 @@ export default function Login(props) {
 	}
 
 	return (
-		<main className='flex flex-col items-center justify-center mx-auto'>
-			<form
-				onSubmit={onSubmit}
-				className={loading ? "disabled flex flex-col" : "flex flex-col"}>
+		<Container maxWidth='xs'>
+			<form onSubmit={onSubmit} className={loading ? "disabled" : ""}>
 				<h1>Log In</h1>
-				<input
+				<TextField
+					label='Username'
+					variant='outlined'
 					placeholder='Username'
 					name='username'
-					className='border border-black mb-2'
 					value={values.username}
 					error={errors.username}
 					onChange={onChange}
 				/>
-				<input
+				<TextField
+					label='Password'
+					variant='outlined'
 					placeholder='Password'
 					name='password'
 					type='password'
-					className='border border-black mb-2'
 					value={values.password}
 					error={errors.password}
 					onChange={onChange}
 				/>
-				<button className='border border-black'>Log In</button>
+				<button variant='contained'>Log In</button>
 				{Object.keys(errors).length > 0 && (
-					<div className='errors flex flex-col'>
+					<div className='errors'>
 						{Object.values(errors).map((value) => (
 							<p key={value}>{value}</p>
 						))}
 					</div>
 				)}
 			</form>
-		</main>
+		</Container>
 	);
 }
