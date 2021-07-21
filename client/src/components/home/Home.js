@@ -10,6 +10,7 @@ function Home() {
 	return (
 		<Container maxWidth='xs'>
 			<div>
+				<br />
 				<h1>Recent Posts</h1>
 			</div>
 			{loading ? (

@@ -5,6 +5,11 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+
 import { AuthContext } from "../../context/auth";
 import { FETCH_POST_QUERY } from "../../queries/getOnePost";
 import LikeButton from "../buttons/LikeButton";
@@ -56,69 +61,73 @@ function SinglePost(props) {
 		} = data;
 
 		postMarkup = (
-			<Container maxWidth='xs' key={id}>
-				<div>
+			<>
+				<Container maxWidth='xs' key={id}>
 					<div>
-						<img
-							src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-							alt='avatar'
-						/>
-						<p>{username}</p>
 						<div>
-							{user && user.username === username && (
-								<DeleteButton postId={id} callback={deletePostCallback} />
-							)}
+							<img
+								src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+								alt='avatar'
+							/>
+							<p>{username}</p>
+							<div>
+								{user && user.username === username && (
+									<DeleteButton postId={id} callback={deletePostCallback} />
+								)}
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<img src={image} alt={caption} />
-				<p>{caption}</p>
+					<img src={image} alt={caption} />
+					<p>{caption}</p>
 
-				<LikeButton user={user} post={{ id, likes, likeCount }} />
-				<p>Likes: {likeCount}</p>
+					<LikeButton user={user} post={{ id, likes, likeCount }} />
+					<p>Likes: {likeCount}</p>
 
-				<div>
-					<p>Comments: {commentCount}</p>
-					{user && (
-						<div>
-							<p>Post a comment</p>
-							<form>
-								<TextField
-									id='outlined-basic'
-									label='Post a comment'
-									variant='outlined'
-									placeholder='comment..'
-									type='text'
-									name='comment'
-									value={comment}
-									onChange={(e) => setComment(e.target.value)}
-									ref={commentInputRef}
-								/>
-								<Button
-									variant='contained'
-									type='submit'
-									disabled={comment.trim() === ""}
-									onClick={submitComment}>
-									Submit
-								</Button>
-							</form>
-						</div>
-					)}
-					{comments.map((comment) => (
-						<div key={comment.id}>
-							{user && user.username === comment.username && (
-								<DeleteButton postId={id} commentId={comment.id} />
-							)}
-							<p>{comment.username}</p>
-							<p>{moment(comment.createdAt).fromNow()}</p>
-							<p>{comment.body}</p>
-						</div>
-					))}
-				</div>
+					<div>
+						<p>Comments: {commentCount}</p>
+						{user && (
+							<div>
+								<p>Post a comment</p>
+								<form>
+									<TextField
+										id='outlined-basic'
+										label='Post a comment'
+										variant='outlined'
+										placeholder='comment..'
+										type='text'
+										name='comment'
+										value={comment}
+										onChange={(e) => setComment(e.target.value)}
+										ref={commentInputRef}
+									/>
+									<Button
+										variant='contained'
+										type='submit'
+										disabled={comment.trim() === ""}
+										onClick={submitComment}>
+										Submit
+									</Button>
+								</form>
+							</div>
+						)}
+						{comments.map((comment) => (
+							<div key={comment.id}>
+								{user && user.username === comment.username && (
+									<DeleteButton postId={id} commentId={comment.id} />
+								)}
+								<p>{comment.username}</p>
+								<p>{moment(comment.createdAt).fromNow()}</p>
+								<p>{comment.body}</p>
+							</div>
+						))}
+					</div>
 
-				<p>{moment(createdAt).fromNow()}</p>
-			</Container>
+					<p>{moment(createdAt).fromNow()}</p>
+				</Container>
+
+				<br />
+			</>
 		);
 	}
 	return postMarkup;
