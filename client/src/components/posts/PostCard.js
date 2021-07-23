@@ -2,15 +2,9 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-
 import { AuthContext } from "../../context/auth";
 import LikeButton from "../buttons/LikeButton";
 import DeleteButton from "../buttons/DeleteButton";
-import { Avatar } from "@material-ui/core";
 
 export default function PostCard({
 	post: {
@@ -29,21 +23,21 @@ export default function PostCard({
 	return (
 		<>
 			<br />
-			<Card>
-				<CardHeader
-					avatar={<Avatar />}
-					title={username}
-					subheader={moment(createdAt).fromNow()}
-					action={
-						user && user.username === username && <DeleteButton postId={id} />
-					}
-				/>
+			<div>
+				<div>
+					<img
+						src='https://lh3.googleusercontent.com/proxy/2ZR1AupC5F5XUmKFfFkIS0C7hXxhGFtFeTQ1YB4JA7o8xxj-H0CKP3PlZYmiDAO_wMQ_BUoUmdqrs6hn3unasFIrhr7rTghM-GkUCnB64mRKdTB5nfBctY5QYCtpXASP0iAgq_DZD7zgIkBVXeLxsQ96SYJC'
+						alt={username}
+					/>
+					<p>{username}</p>
+					{user && user.username === username && <DeleteButton postId={id} />}
+				</div>
 
-				<CardContent>
+				<div>
 					<Link to={`/posts/${id}`}>
 						<img src={image} alt={caption} />
 					</Link>
-					<Typography>
+					<div>
 						<p>{caption}</p>
 
 						<br />
@@ -73,9 +67,9 @@ export default function PostCard({
 								</div>
 							))}
 						</p>
-					</Typography>
-				</CardContent>
-			</Card>
+					</div>
+				</div>
+			</div>
 			<br />
 		</>
 	);

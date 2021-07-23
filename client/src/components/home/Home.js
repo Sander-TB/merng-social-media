@@ -3,12 +3,11 @@ import { useQuery } from "@apollo/client";
 
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
 import PostCard from "../posts/PostCard";
-import Container from "@material-ui/core/Container";
 
 function Home() {
 	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 	return (
-		<Container maxWidth='xs'>
+		<main>
 			<div>
 				<br />
 				<h1>Recent Posts</h1>
@@ -25,7 +24,7 @@ function Home() {
 					);
 				})
 			)}
-		</Container>
+		</main>
 	);
 }
 

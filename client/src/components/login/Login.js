@@ -3,9 +3,6 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../queries/login";
 import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../context/auth";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
 
 export default function Login(props) {
 	const context = useContext(AuthContext);
@@ -33,21 +30,17 @@ export default function Login(props) {
 	}
 
 	return (
-		<Container maxWidth='xs'>
+		<div>
 			<form onSubmit={onSubmit} className={loading ? "disabled" : ""}>
 				<h1>Log In</h1>
-				<TextField
-					label='Username'
-					variant='outlined'
+				<input
 					placeholder='Username'
 					name='username'
 					value={values.username}
 					error={errors.username}
 					onChange={onChange}
 				/>
-				<TextField
-					label='Password'
-					variant='outlined'
+				<input
 					placeholder='Password'
 					name='password'
 					type='password'
@@ -55,7 +48,7 @@ export default function Login(props) {
 					error={errors.password}
 					onChange={onChange}
 				/>
-				<button variant='contained'>Log In</button>
+				<button>Log In</button>
 				{Object.keys(errors).length > 0 && (
 					<div className='errors'>
 						{Object.values(errors).map((value) => (
@@ -64,6 +57,6 @@ export default function Login(props) {
 					</div>
 				)}
 			</form>
-		</Container>
+		</div>
 	);
 }

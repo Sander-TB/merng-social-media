@@ -3,9 +3,6 @@ import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../queries/register";
 import { useForm } from "../../hooks/useForm";
 import { AuthContext } from "../../context/auth";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
 
 export default function Register(props) {
 	const context = useContext(AuthContext);
@@ -34,30 +31,24 @@ export default function Register(props) {
 	}
 
 	return (
-		<Container maxWidth='xs'>
+		<div>
 			<form onSubmit={onSubmit} className={loading ? "disabled" : ""}>
 				<h1>Register</h1>
-				<TextField
-					label='Username'
-					variant='outlined'
+				<input
 					placeholder='Username'
 					name='username'
 					value={values.username}
 					error={errors.username}
 					onChange={onChange}
 				/>
-				<TextField
-					label='Email'
-					variant='outlined'
+				<input
 					placeholder='Email'
 					name='email'
 					value={values.email}
 					error={errors.email}
 					onChange={onChange}
 				/>
-				<TextField
-					label='Password'
-					variant='outlined'
+				<input
 					placeholder='Password'
 					name='password'
 					type='password'
@@ -65,9 +56,7 @@ export default function Register(props) {
 					error={errors.password}
 					onChange={onChange}
 				/>
-				<TextField
-					label='Confirm Password'
-					variant='outlined'
+				<input
 					placeholder='Confirm Password'
 					name='confirmPassword'
 					type='password'
@@ -75,7 +64,7 @@ export default function Register(props) {
 					error={errors.confirmPassword}
 					onChange={onChange}
 				/>
-				<Button variant='contained'>Register</Button>
+				<button>Register</button>
 				{Object.keys(errors).length > 0 && (
 					<div className='errors'>
 						{Object.values(errors).map((value) => (
@@ -84,6 +73,6 @@ export default function Register(props) {
 					</div>
 				)}
 			</form>
-		</Container>
+		</div>
 	);
 }

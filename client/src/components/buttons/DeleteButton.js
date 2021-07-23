@@ -1,8 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { IoTrash } from "react-icons/io5";
 
 import { DELETE_POST_MUTATION } from "../../queries/deletePost";
 import { FETCH_POSTS_QUERY } from "../../queries/getPosts";
@@ -43,9 +42,9 @@ function DeleteButton({ postId, commentId, callback }) {
 
 	return (
 		<>
-			<IconButton onClick={() => setConfirmOpen(true)}>
-				<DeleteIcon />
-			</IconButton>
+			<button onClick={() => setConfirmOpen(true)}>
+				<IoTrash />
+			</button>
 			<Transition.Root show={confirmOpen} as={Fragment}>
 				<Dialog
 					as='div'

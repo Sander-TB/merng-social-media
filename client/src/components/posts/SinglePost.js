@@ -1,14 +1,6 @@
 import { useQuery, useMutation } from "@apollo/client";
 import moment from "moment";
 import { useContext, useState, useRef } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Container from "@material-ui/core/Container";
-
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 
 import { AuthContext } from "../../context/auth";
 import { FETCH_POST_QUERY } from "../../queries/getOnePost";
@@ -62,71 +54,55 @@ function SinglePost(props) {
 
 		postMarkup = (
 			<>
-				<Container maxWidth='xs' key={id}>
-					<div>
+				<br />
+				<div key={id}>
+					<div className>
 						<div>
 							<img
-								src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-								alt='avatar'
+								src='https://lh3.googleusercontent.com/proxy/2ZR1AupC5F5XUmKFfFkIS0C7hXxhGFtFeTQ1YB4JA7o8xxj-H0CKP3PlZYmiDAO_wMQ_BUoUmdqrs6hn3unasFIrhr7rTghM-GkUCnB64mRKdTB5nfBctY5QYCtpXASP0iAgq_DZD7zgIkBVXeLxsQ96SYJC'
+								alt={username}
 							/>
 							<p>{username}</p>
+							<p>{moment(createdAt).fromNow()}</p>
+							{user && user.username === username && (
+								<DeleteButton postId={id} />
+							)}
+						</div>
+
+						<div>
+							<img src={image} alt={caption} />
 							<div>
-								{user && user.username === username && (
-									<DeleteButton postId={id} callback={deletePostCallback} />
-								)}
+								<p>{caption}</p>
+								<LikeButton user={user} post={{ id, likes, likeCount }} />
+								<p>Likes: {likeCount}</p>
+								<p>
+									Liked by:
+									{likes.map((like) => {
+										if (likes.length < 2) {
+											return like.username;
+										} else {
+											return like.username + ", ";
+										}
+									})}
+								</p>
+								<div>
+									<p>Comments: {commentCount}</p>
+									{comments.map((comment) => (
+										<div key={comment.id}>
+											{(user && user.username === comment.username) ||
+												(user.username === username && (
+													<DeleteButton postId={id} commentId={comment.id} />
+												))}
+											<p>{comment.username}</p>
+											<p>{comment.body}</p>
+											<p>{moment(comment.createdAt).fromNow()}</p>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
-
-					<img src={image} alt={caption} />
-					<p>{caption}</p>
-
-					<LikeButton user={user} post={{ id, likes, likeCount }} />
-					<p>Likes: {likeCount}</p>
-
-					<div>
-						<p>Comments: {commentCount}</p>
-						{user && (
-							<div>
-								<p>Post a comment</p>
-								<form>
-									<TextField
-										id='outlined-basic'
-										label='Post a comment'
-										variant='outlined'
-										placeholder='comment..'
-										type='text'
-										name='comment'
-										value={comment}
-										onChange={(e) => setComment(e.target.value)}
-										ref={commentInputRef}
-									/>
-									<Button
-										variant='contained'
-										type='submit'
-										disabled={comment.trim() === ""}
-										onClick={submitComment}>
-										Submit
-									</Button>
-								</form>
-							</div>
-						)}
-						{comments.map((comment) => (
-							<div key={comment.id}>
-								{user && user.username === comment.username && (
-									<DeleteButton postId={id} commentId={comment.id} />
-								)}
-								<p>{comment.username}</p>
-								<p>{moment(comment.createdAt).fromNow()}</p>
-								<p>{comment.body}</p>
-							</div>
-						))}
-					</div>
-
-					<p>{moment(createdAt).fromNow()}</p>
-				</Container>
-
-				<br />
+				</div>
 			</>
 		);
 	}
