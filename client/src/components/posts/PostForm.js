@@ -32,28 +32,35 @@ export default function PostForm() {
 	}
 
 	return (
-		<form onSubmit={onSubmit}>
-			<h1>Create a post</h1>
-
-			<input
-				name='image'
-				type='text'
-				placeholder='Image'
-				onChange={onChange}
-				value={values.image}
-			/>
-			<input
-				placeholder='caption'
-				name='caption'
-				onChange={onChange}
-				value={values.caption}
-			/>
-			{error && (
-				<div className='errors'>
-					<p>{error.graphQLErrors[0].message}</p>
-				</div>
-			)}
-			<button>Submit</button>
-		</form>
+		<main className='my-5 max-w-md mx-auto'>
+			<h1 className='text-4xl text-center font-bold'>Create a post</h1>
+			<form
+				onSubmit={onSubmit}
+				className='flex flex-col items-center border border-black my-10 shadow rounded-md bg-white'>
+				<input
+					className='bg-gray-300 w-1/2 mb-2 mt-10 p-2 rounded-sm'
+					name='image'
+					type='text'
+					placeholder='Image'
+					onChange={onChange}
+					value={values.image}
+				/>
+				<input
+					className='bg-gray-300 w-1/2 mb-2 p-2 rounded-sm'
+					placeholder='caption'
+					name='caption'
+					onChange={onChange}
+					value={values.caption}
+				/>
+				{error && (
+					<div className='errors'>
+						<p>{error.graphQLErrors[0].message}</p>
+					</div>
+				)}
+				<button className='px-1 ml-1 w-1/2 mb-10 p-2 rounded-sm bg-blue-400'>
+					Submit
+				</button>
+			</form>
+		</main>
 	);
 }

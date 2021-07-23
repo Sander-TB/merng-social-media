@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { IoPersonCircle, IoChatbubbleOutline } from "react-icons/io5";
 
 import { AuthContext } from "../../context/auth";
 import LikeButton from "../buttons/LikeButton";
@@ -22,55 +23,56 @@ export default function PostCard({
 	const { user } = useContext(AuthContext);
 	return (
 		<>
-			<br />
-			<div>
-				<div>
-					<img
-						src='https://lh3.googleusercontent.com/proxy/2ZR1AupC5F5XUmKFfFkIS0C7hXxhGFtFeTQ1YB4JA7o8xxj-H0CKP3PlZYmiDAO_wMQ_BUoUmdqrs6hn3unasFIrhr7rTghM-GkUCnB64mRKdTB5nfBctY5QYCtpXASP0iAgq_DZD7zgIkBVXeLxsQ96SYJC'
-						alt={username}
-					/>
-					<p>{username}</p>
-					{user && user.username === username && <DeleteButton postId={id} />}
-				</div>
+			<main className='max-w-md mx-auto shadow-lg my-10 rounded-md'>
+				<header className='flex flex-row justify-between items-center py-2 bg-white rounded-md'>
+					<IoPersonCircle className='text-5xl text-gray-400' />
+					<p className='text-2xl font-bold'>{username}</p>
+					<p className='text-gray-400 text-xs'>{moment(createdAt).fromNow()}</p>
+					<div>
+						{user && user.username === username && <DeleteButton postId={id} />}
+					</div>
+				</header>
 
-				<div>
+				<div className='flex flex-col'>
 					<Link to={`/posts/${id}`}>
 						<img src={image} alt={caption} />
 					</Link>
-					<div>
-						<p>{caption}</p>
+					<div className='flex flex-col px-2 py-3 bg-white rounded-b-md'>
+						<div className='flex text-4xl mb-5'>
+							<LikeButton user={user} post={{ id, likes, likeCount }} />
+							<Link to={`/posts/${id}`}>
+								<IoChatbubbleOutline className='ml-2' />
+							</Link>
+						</div>
+						<div>
+							<p>
+								{likeCount} likes, {commentCount} comments
+							</p>
+						</div>
+						<div className='flex'>
+							<p className='font-bold'>{username}:</p>
+							<p className='ml-1'>{caption}</p>
+						</div>
 
-						<br />
-						<LikeButton user={user} post={{ id, likes, likeCount }} />
-						<p>Likes: {likeCount}</p>
-						<p>
-							Liked by:
-							{likes.map((like) => {
-								if (likes.length < 2) {
-									return like.username;
-								} else {
-									return like.username + ", ";
-								}
-							})}
-						</p>
-
-						<br />
-						<p>
+						<div>
 							{comments.map((comment) => (
-								<div key={comment.id}>
-									{user && user.username === comment.username && (
-										<DeleteButton postId={id} commentId={comment.id} />
-									)}
-									<p>{comment.username}</p>
-									<p>{comment.body}</p>
-									<p>{moment(comment.createdAt).fromNow()}</p>
+								<div key={comment.id} className='flex items-center'>
+									<p className='font-bold'>{comment.username}: </p>
+									<p className='ml-2 mr-3'>{comment.body}</p>
+									<p className='text-gray-400 text-xs'>
+										{moment(comment.createdAt).fromNow()}
+									</p>
+									<p className='mb-3'>
+										{user && user.username === comment.username && (
+											<DeleteButton postId={id} commentId={comment.id} />
+										)}
+									</p>
 								</div>
 							))}
-						</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<br />
+			</main>
 		</>
 	);
 }

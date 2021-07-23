@@ -42,7 +42,9 @@ function DeleteButton({ postId, commentId, callback }) {
 
 	return (
 		<>
-			<button onClick={() => setConfirmOpen(true)}>
+			<button
+				className='bg-red-400 text-lg p-1 rounded-sm mx-2'
+				onClick={() => setConfirmOpen(true)}>
 				<IoTrash />
 			</button>
 			<Transition.Root show={confirmOpen} as={Fragment}>

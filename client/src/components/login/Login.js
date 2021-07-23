@@ -48,7 +48,7 @@ export default function Login(props) {
 					error={errors.password}
 					onChange={onChange}
 				/>
-				<button>Log In</button>
+				<button className='border'>Log In</button>
 				{Object.keys(errors).length > 0 && (
 					<div className='errors'>
 						{Object.values(errors).map((value) => (
