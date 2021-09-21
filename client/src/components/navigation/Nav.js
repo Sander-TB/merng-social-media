@@ -37,7 +37,6 @@ export default function Nav() {
 						<p className='font-logo'>Pixelgram</p>
 					</div>
 				</Link>
-
 				<div>
 					<LoginButton />
 					<RegisterButton />
